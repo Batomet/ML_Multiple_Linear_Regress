@@ -7,8 +7,8 @@ from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LinearRegression
 
 ds = pd.read_csv('50_Startups.csv')
-X = ds.iloc[:, :-1]
-y = ds.iloc[:, -1]
+X = ds.iloc[:, :-1].values
+y = ds.iloc[:, -1].values
 
 ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [3])], remainder='passthrough')
 X = np.array(ct.fit_transform(X))
@@ -20,4 +20,4 @@ regressor.fit(X_train, y_train)
 
 y_pred = regressor.predict(X_test)
 np.set_printoptions(precision=2)
-print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.values.reshape(len(y_test), 1)), 1))
+print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test), 1)), 1))
